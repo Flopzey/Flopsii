@@ -47,8 +47,6 @@
             <artifactId>ini4j</artifactId>
             <version>LATEST</version>
         </dependency>
-
     </dependencies>
-
 
 </project>
