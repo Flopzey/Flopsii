@@ -2,6 +2,8 @@ package net.flopzey.bot.core;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.flopzey.bot.commands.CommandRegistry;
+import net.flopzey.bot.listeners.CommandListener;
 import org.ini4j.Ini;
 
 import javax.security.auth.login.LoginException;
@@ -15,8 +17,10 @@ public class Main {
         try {
             Ini ini = new Ini(new File("config.ini"));
 
-            // todo - Constants
-            JDA jda = new JDABuilder(ini.get("BotConfig", "Token")).build();
+            // init command
+            new CommandRegistry();
+
+            JDA jda = new JDABuilder(ini.get("BotConfig", "Token")).addEventListeners(new CommandListener()).build();
 
         } catch (IOException ex) {
             ex.printStackTrace();

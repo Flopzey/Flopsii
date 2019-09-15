@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.flopzey.dev</groupId>
+    <groupId>net.flopzey</groupId>
     <artifactId>flopsii</artifactId>
     <version>1.0-SNAPSHOT</version>
 
