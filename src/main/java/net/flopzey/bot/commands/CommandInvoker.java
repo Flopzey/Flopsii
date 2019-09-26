@@ -10,7 +10,14 @@ public class CommandInvoker {
         String command = container.getCommand();
 
         if (commandMap.containsKey(command)) {
-            commandMap.get(command).execute(container.getArgs(), container.getEvent());
+
+            BaseCommand cmd = commandMap.get(command);
+            boolean isAllowed = cmd.preExecute(container.getEvent());
+
+            if (isAllowed) {
+                cmd.execute(container.getArgs(), container.getEvent());
+            }
+
         }
 
     }
