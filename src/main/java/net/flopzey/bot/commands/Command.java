@@ -14,6 +14,7 @@ public @interface Command {
     String description() default "No description provided.";
 
     String usage() default "";
+
     // todo - category (enum)
 
 }
