@@ -47,6 +47,11 @@
             <artifactId>ini4j</artifactId>
             <version>LATEST</version>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
 
 </project>

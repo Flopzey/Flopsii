@@ -1,9 +1,12 @@
 package net.flopzey.bot.commands;
 
-import net.flopzey.bot.commands.placeholder.ClearCommand;
+import org.reflections.Reflections;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CommandRegistry {
 
@@ -13,8 +16,18 @@ public class CommandRegistry {
 
         commandMap = new HashMap<>();
 
-        // commands
-        register(new ClearCommand());
+        // registering commands via reflections
+        Reflections reflections = new Reflections("net.flopzey.bot.commands");
+        Set<Class<? extends BaseCommand>> classes = reflections.getSubTypesOf(BaseCommand.class);
+        for (Class<? extends BaseCommand> cmdClass : classes) {
+            try {
+                Constructor<? extends BaseCommand> constructor = cmdClass.getConstructor();
+                register(constructor.newInstance());
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
+                ex.printStackTrace();
+                // todo - Logger
+            }
+        }
 
     }
 
