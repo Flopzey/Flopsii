@@ -1,19 +1,17 @@
-package net.flopzey.bot.commands.placeholder;
+package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 
-@Command(
-        aliases = {"clear", "c"},
-        description = "very nice description"
+@Command(aliases = {"who", "whois"},
+        usage = "",
+        description = ""
 )
-public class ClearCommand extends BaseCommand {
+public class WhoIsCommand extends BaseCommand {
 
     @Override
     public void execute(String[] args, MessageReceivedEvent event) {
-
-//        event.getTextChannel().sendMessage("Test").queue();
 
     }
 
