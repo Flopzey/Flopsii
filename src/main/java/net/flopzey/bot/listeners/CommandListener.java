@@ -14,7 +14,8 @@ public class CommandListener extends ListenerAdapter {
         CommandParser parser = new CommandParser();
         Message msg = event.getMessage();
 
-        if (msg.getContentRaw().startsWith(BotConfig.getCommandPrefix())) {
+        if (!event.getAuthor().isBot()
+                && msg.getContentRaw().startsWith(BotConfig.getCommandPrefix())) {
             CommandInvoker.invoke(parser.parse(event.getMessage().getContentRaw(), event));
         }
 
