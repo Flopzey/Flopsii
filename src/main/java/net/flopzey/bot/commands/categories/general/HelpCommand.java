@@ -7,7 +7,8 @@ import net.flopzey.bot.commands.Command;
 @Command(
         aliases = {"h", "help"},
         description = "",
-        usage = ""
+        usage = "",
+        category = Command.Category.GENERAL
 )
 public class HelpCommand extends BaseCommand {
 

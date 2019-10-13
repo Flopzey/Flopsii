@@ -12,7 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Command(
-        aliases = {"shutdown"}
+        aliases = {"shutdown"},
+        category = Command.Category.HIDDEN
 )
 public class ShutdownCommand extends BaseCommand {
 

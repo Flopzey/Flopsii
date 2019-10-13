@@ -15,6 +15,11 @@ public @interface Command {
 
     String usage() default "";
 
-    // todo - category (enum)
+    Category category();
+
+    enum Category {
+        ADMIN, HIDDEN, FUN, GENERAL
+    }
 
 }
+
