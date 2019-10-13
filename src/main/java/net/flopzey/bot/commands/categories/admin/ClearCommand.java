@@ -15,7 +15,8 @@ import java.util.TimerTask;
 
 @Command(
         aliases = {"clear", "c"},
-        description = "very nice description"
+        description = "very nice description",
+        category = Command.Category.ADMIN
 )
 public class ClearCommand extends BaseCommand {
 

@@ -13,7 +13,8 @@ import java.util.Random;
 @Command(
         aliases = {"random", "r"},
         description = "very nice description",
-        usage = "`placeholder`"
+        usage = "`placeholder`",
+        category = Command.Category.FUN
 )
 public class RandomCommand extends BaseCommand {
 

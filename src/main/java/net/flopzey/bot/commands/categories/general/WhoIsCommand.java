@@ -6,7 +6,8 @@ import net.flopzey.bot.commands.Command;
 
 @Command(aliases = {"who", "whois"},
         usage = "",
-        description = ""
+        description = "",
+        category = Command.Category.GENERAL
 )
 public class WhoIsCommand extends BaseCommand {
 
