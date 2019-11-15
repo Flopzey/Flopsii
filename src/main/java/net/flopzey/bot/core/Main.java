@@ -15,15 +15,12 @@ public class Main {
     public static void main(String args[]) {
 
         try {
-            Ini ini = new Ini(new File("config.ini"));
 
             // init command
             new CommandRegistry();
 
-            JDA jda = new JDABuilder(ini.get("BotConfig", "Token")).addEventListeners(new CommandListener()).build();
+            JDA jda = new JDABuilder(BotConfig.getBotToken()).addEventListeners(new CommandListener()).build();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
         } catch (LoginException ex) {
             ex.printStackTrace();
         }
