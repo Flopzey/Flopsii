@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class CommandRegistry {
 
+    private static final String COMMAND_PATH = "net.flopzey.bot.commands.categories";
     private static Map<String, BaseCommand> commandMap;
 
     public CommandRegistry() {
@@ -17,7 +18,7 @@ public class CommandRegistry {
         commandMap = new HashMap<>();
 
         // registering commands via reflections
-        Reflections reflections = new Reflections("net.flopzey.bot.commands");
+        Reflections reflections = new Reflections(COMMAND_PATH);
         Set<Class<? extends BaseCommand>> classes = reflections.getSubTypesOf(BaseCommand.class);
         for (Class<? extends BaseCommand> cmdClass : classes) {
             try {
@@ -50,7 +51,7 @@ public class CommandRegistry {
 
     private void registerCommand(String alias, BaseCommand command) {
         if (commandMap.containsKey(alias.toLowerCase())) {
-            throw new IllegalStateException("Command is allready registerd!");
+            throw new IllegalStateException("Command is already registered!");
         }
         commandMap.put(alias, command);
     }
