@@ -15,7 +15,8 @@ import java.util.TimerTask;
 
 @Command(
         aliases = {"clear", "c"},
-        description = "very nice description",
+        description = "Delete messages in the current text channel.",
+        usage = "clear [1-99]",
         category = Command.Category.ADMIN
 )
 public class ClearCommand extends BaseCommand {

@@ -1,6 +1,5 @@
 package net.flopzey.bot.commands.categories.fun;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
@@ -21,7 +20,7 @@ public class RandomCommand extends BaseCommand {
     @Override
     public void execute(String[] args, MessageReceivedEvent event) {
 
-        // todo refactor
+        // proof of concept
 
         List<Member> memberList = event.getTextChannel().getMembers();
         List<Member> pickList = new ArrayList<>();
