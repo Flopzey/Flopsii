@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageHistory;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
+import net.flopzey.bot.core.BotConfig;
 import net.flopzey.bot.utils.BotUtils;
 import net.flopzey.bot.utils.MessageUtils;
 
@@ -31,7 +32,7 @@ public class ClearCommand extends BaseCommand {
 
         int count = (args.length > 0) ? BotUtils.parseInt(args[0]) : 0;
 
-        // delete initial message
+        // delete call message
         event.getMessage().delete().queue();
         try {
             Thread.sleep(500);
@@ -61,9 +62,12 @@ public class ClearCommand extends BaseCommand {
                 }
             }, 3000);
 
-        }
+        } else {
 
-        // todo - handling of wrong usage
+            String warnMessageText = "**Syntax Error:**\n" + BotConfig.getCommandPrefix() + getInfo().usage();
+            event.getTextChannel().sendMessage(MessageUtils.getWarnMessage(warnMessageText)).queue();
+
+        }
 
     }
 
