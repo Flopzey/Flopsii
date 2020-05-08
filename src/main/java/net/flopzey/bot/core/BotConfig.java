@@ -31,8 +31,16 @@ public class BotConfig {
         return botConfig.get("Command_Prefix");
     }
 
-    public static String getBotOwnerID() {
-        return botConfig.get("Bot_Owner");
+    public static String getBotName() {
+        return botConfig.get("Bot_Name");
+    }
+
+    public static String getInviteLink() {
+        return botConfig.get("Invite_Link");
+    }
+
+    public static String getDevID() {
+        return botConfig.get("Dev_ID");
     }
 
 }

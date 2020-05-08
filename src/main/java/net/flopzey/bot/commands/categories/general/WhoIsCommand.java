@@ -1,15 +1,12 @@
 package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
-import net.flopzey.bot.utils.Colors;
+import net.flopzey.bot.utils.MessageUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Instant;
@@ -39,6 +36,7 @@ public class WhoIsCommand extends BaseCommand {
         }
 
         EmbedBuilder builder = new EmbedBuilder();
+        MessageEmbed message = null;
 
         if (member != null) {
 
@@ -68,14 +66,15 @@ public class WhoIsCommand extends BaseCommand {
                     .setFooter(event.getJDA().getSelfUser().getName(), event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                     .setTimestamp(Instant.now());
 
+            message = builder.build();
+
         } else {
 
-            builder.setColor(Colors.DISCORD_RED)
-                    .setTitle("Error")
-                    .setDescription("The searched user could not be found.");
+            message = MessageUtils.getWarnMessage("The searched user could not be found.");
+
         }
 
-        event.getTextChannel().sendMessage(builder.build()).queue();
+        event.getTextChannel().sendMessage(message).queue();
 
     }
 
@@ -118,6 +117,5 @@ public class WhoIsCommand extends BaseCommand {
         return result;
 
     }
-
 
 }
