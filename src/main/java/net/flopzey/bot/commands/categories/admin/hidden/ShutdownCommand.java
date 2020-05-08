@@ -21,7 +21,7 @@ public class ShutdownCommand extends BaseCommand {
 
     @Override
     public boolean preExecute(MessageReceivedEvent event) {
-        return BotConfig.getBotOwnerID().equals(event.getMessage().getAuthor().getId());
+        return BotConfig.getDevID().equals(event.getMessage().getAuthor().getId());
     }
 
     @Override
