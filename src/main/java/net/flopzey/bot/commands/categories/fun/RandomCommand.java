@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 @Command(
-        aliases = {"random", "r"},
+        aliases = {"r", "rand", "random"},
         description = "very nice description",
         usage = "`placeholder`",
         category = Command.Category.FUN

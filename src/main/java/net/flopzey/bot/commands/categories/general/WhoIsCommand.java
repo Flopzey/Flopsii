@@ -32,7 +32,6 @@ public class WhoIsCommand extends BaseCommand {
             member = event.getMember();
         } else {
             member = BotUtils.getMember(event, String.join(" ", args));
-//            member = BotUtils.getMember(event, args[0]);
         }
 
         EmbedBuilder builder = new EmbedBuilder();
