@@ -3,6 +3,7 @@ package net.flopzey.bot.utils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+import java.awt.*;
 import java.util.List;
 
 public class BotUtils {
@@ -16,6 +17,18 @@ public class BotUtils {
             // todo - Logger
             return 0;
         }
+    }
+
+    public static Color getBotColor( MessageReceivedEvent event ) {
+
+        Color color = event.getGuild().getMemberById( event.getJDA().getSelfUser().getId() ).getColor();
+
+        if( color == null ) {
+            color = Colors.BOT_DEFAULT_COLOR;
+        }
+
+        return color;
+
     }
 
     // todo - check if improvement needed
