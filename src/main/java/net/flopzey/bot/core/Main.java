@@ -16,7 +16,7 @@ public class Main {
             // init command
             new CommandRegistry();
 
-            JDA jda = new JDABuilder(BotConfig.getBotToken()).addEventListeners(new CommandListener()).build();
+            JDA jda = JDABuilder.createDefault(BotConfig.getBotToken()).addEventListeners(new CommandListener()).build();
 
         } catch (LoginException ex) {
             ex.printStackTrace();
