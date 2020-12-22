@@ -8,15 +8,21 @@ import java.io.IOException;
 
 public class BotConfig {
 
+    private static final String SECTION_SETUP = "Setup";
     private static final String SECTION_BOT_CONFIG = "BotConfig";
 
+    private static Profile.Section setup;
     private static Profile.Section botConfig;
+    private static String mode;
 
     static {
 
         try {
             Ini ini = new Ini(new File("config.ini"));
+            setup = ini.get(SECTION_SETUP);
             botConfig = ini.get(SECTION_BOT_CONFIG);
+
+            mode = Boolean.parseBoolean( setup.get("ProductionMode") ) ? "_Prod" : "_Dev";
         } catch (IOException ex) {
             // todo - Logger
         }
@@ -24,7 +30,7 @@ public class BotConfig {
     }
 
     protected static String getBotToken() {
-        return botConfig.get("Token");
+        return botConfig.get("Token"+mode);
     }
 
     public static String getCommandPrefix() {
