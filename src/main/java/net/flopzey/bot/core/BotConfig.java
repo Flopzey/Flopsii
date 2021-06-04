@@ -49,4 +49,6 @@ public class BotConfig {
         return botConfig.get("Dev_ID");
     }
 
+    public static Boolean isProductionMode() { return Boolean.parseBoolean(setup.get("ProductionMode")); }
+
 }
