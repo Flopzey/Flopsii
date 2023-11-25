@@ -2,6 +2,8 @@ package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
@@ -18,10 +20,8 @@ public class HelpCommand extends BaseCommand {
     @Override
     public void execute(String[] args, MessageReceivedEvent event) {
 
-
-
-        event.getMessage().addReaction(REACTION_EMOTE).queue();
-        event.getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessage(createHelpMessage()).queue());
+        event.getMessage().addReaction(Emoji.fromUnicode(REACTION_EMOTE)).queue();
+        event.getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessageEmbeds(createHelpMessage()).queue());
 
     }
 

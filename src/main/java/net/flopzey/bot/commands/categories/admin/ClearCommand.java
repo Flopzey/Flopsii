@@ -40,7 +40,8 @@ public class ClearCommand extends BaseCommand {
             // todo - Logger
         }
 
-        MessageHistory history = event.getTextChannel().getHistory();
+        //MessageHistory history = event.getTextChannel().getHistory();
+        MessageHistory history = event.getChannel().asTextChannel().getHistory();
         List<Message> messageHistory;
 
         if (count > 0 && count < 100) {
@@ -49,10 +50,12 @@ public class ClearCommand extends BaseCommand {
             if (messageHistory.size() == 1) {
                 messageHistory.get(0).delete().queue();
             } else {
-                event.getTextChannel().deleteMessages(messageHistory).queue();
+                //event.getTextChannel().deleteMessages(messageHistory).queue();
+                event.getChannel().asTextChannel().deleteMessages(messageHistory).queue();
             }
 
-            Message message = event.getTextChannel().sendMessage(
+            //Message message = event.getTextChannel().sendMessage(
+            Message message = event.getChannel().sendMessageEmbeds(
                     MessageUtils.getSuccessMessage("Deleted messages: " + count))
                     .complete();
             new Timer().schedule(new TimerTask() {
@@ -65,7 +68,8 @@ public class ClearCommand extends BaseCommand {
         } else {
 
             String warnMessageText = "**Syntax Error:**\n" + BotConfig.getCommandPrefix() + getInfo().usage();
-            event.getTextChannel().sendMessage(MessageUtils.getWarnMessage(warnMessageText)).queue();
+            //event.getTextChannel().sendMessage(MessageUtils.getWarnMessage(warnMessageText)).queue();
+            event.getChannel().sendMessageEmbeds(MessageUtils.getWarnMessage((warnMessageText))).queue();
 
         }
 

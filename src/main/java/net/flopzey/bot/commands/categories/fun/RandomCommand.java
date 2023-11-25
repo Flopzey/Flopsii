@@ -22,7 +22,8 @@ public class RandomCommand extends BaseCommand {
 
         // proof of concept
 
-        List<Member> memberList = event.getTextChannel().getMembers();
+        //List<Member> memberList = event.getTextChannel().getMembers();
+        List<Member> memberList = event.getChannel().asTextChannel().getMembers();
         List<Member> pickList = new ArrayList<>();
 
         for (Member m : memberList) {
@@ -38,7 +39,8 @@ public class RandomCommand extends BaseCommand {
 
         String msg = pick.getAsMention();
 
-        event.getTextChannel().sendMessage(msg).queue();
+        //event.getTextChannel().sendMessage(msg).queue();
+        event.getChannel().sendMessage(msg).queue();
 
 
     }
