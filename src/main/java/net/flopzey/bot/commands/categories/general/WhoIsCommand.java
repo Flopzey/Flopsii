@@ -55,7 +55,8 @@ public class WhoIsCommand extends BaseCommand {
             }
 
             builder.setColor(member.getColor())
-                    .setAuthor(member.getEffectiveName() + "#" + user.getDiscriminator() + "(" + user.getId() + ")",
+                    //.setAuthor(member.getEffectiveName() + "#" + user.getDiscriminator() + "(" + user.getId() + ")",
+                    .setAuthor(member.getEffectiveName() + "(" + user.getId() + ")",
                             null, user.getEffectiveAvatarUrl())
                     .setThumbnail(user.getEffectiveAvatarUrl())
                     .addField("User Information", userInfo, false)
@@ -73,7 +74,8 @@ public class WhoIsCommand extends BaseCommand {
 
         }
 
-        event.getTextChannel().sendMessage(message).queue();
+        //event.getTextChannel().sendMessage(message).queue();
+        event.getChannel().sendMessageEmbeds(message).queue();
 
     }
 
@@ -89,7 +91,7 @@ public class WhoIsCommand extends BaseCommand {
             for (Activity activity : activities) {
 
                 switch (activity.getType()) {
-                    case DEFAULT:
+                    case PLAYING:
                         builder.append("Playing ");
                         builder.append("**" + activity.getName() + "**");
                         break;

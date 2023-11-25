@@ -1,7 +1,8 @@
 package net.flopzey.bot.commands.categories.admin;
 
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
@@ -33,7 +34,8 @@ public class EmoteRestrictCommand extends BaseCommand {
             List<Role> roles = event.getGuild().getRoles();
 
 
-            List<Emote> emotes = event.getJDA().getEmotesByName( "test", true );
+            //List<Emote> emotes = event.getJDA().getEmotesByName( "test", true );
+            List<RichCustomEmoji> emojis = event.getJDA().getEmojisByName("test", true);
 
             // todo für mehrere rollen erlauben
             Role role = roles.get(0);
@@ -42,9 +44,10 @@ public class EmoteRestrictCommand extends BaseCommand {
             roleSet.add(role);
 
 
-            for ( Emote emote : emotes ) {
+            for ( Emoji emoji : emojis ) {
 
-                emote.getManager().setRoles( roleSet ).queue();
+                //Code does not work
+                //emoji.getManager().setRoles( roleSet ).queue();
 
             }
 

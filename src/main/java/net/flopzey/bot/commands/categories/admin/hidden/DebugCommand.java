@@ -27,7 +27,8 @@ public class DebugCommand extends BaseCommand {
         // delete initial message
         event.getMessage().delete().queue();
 
-        MessageHistory history = event.getTextChannel().getHistory();
+        //MessageHistory history = event.getTextChannel().getHistory();
+        MessageHistory history = event.getChannel().getHistory();
 
         System.out.println("debug");
 

@@ -19,7 +19,8 @@ public class InviteCommand extends BaseCommand {
     @Override
     public void execute(String[] args, MessageReceivedEvent event) {
 
-        event.getTextChannel().sendMessage(
+        //event.getTextChannel().sendMessage(
+        event.getChannel().sendMessageEmbeds(
                 new EmbedBuilder().setColor(BotUtils.getBotColor(event))
                         .setTitle("Get " + BotConfig.getBotName() + " on your server!")
                         .setDescription("__**[Click to invite " + BotConfig.getBotName() + " to your server.](" + BotConfig.getInviteLink() + ")**__")

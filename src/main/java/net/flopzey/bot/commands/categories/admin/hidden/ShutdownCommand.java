@@ -31,7 +31,8 @@ public class ShutdownCommand extends BaseCommand {
         event.getMessage().delete().queue();
 
         EmbedBuilder builder = new EmbedBuilder().setColor(Colors.DISCORD_RED).setDescription(SHUTDOWN_MESSAGE);
-        Message message = event.getTextChannel().sendMessage(builder.build()).complete();
+        //Message message = event.getTextChannel().sendMessage(builder.build()).complete();
+        Message message = event.getChannel().sendMessageEmbeds(builder.build()).complete();
 
         new Timer().schedule(new TimerTask() {
             @Override
