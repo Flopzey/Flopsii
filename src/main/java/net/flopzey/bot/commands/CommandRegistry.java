@@ -26,7 +26,6 @@ public class CommandRegistry {
                 register(constructor.newInstance());
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
                 ex.printStackTrace();
-                // todo - Logger
             }
         }
 
@@ -43,7 +42,7 @@ public class CommandRegistry {
             throw new IllegalStateException("No command annotation found!");
         }
 
-        for (String alias : command.getInfo().aliases()) {
+        for (String alias : command.getInfo().alias()) {
             registerCommand(alias, command);
         }
 

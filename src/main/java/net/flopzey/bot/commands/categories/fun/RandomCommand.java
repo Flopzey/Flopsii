@@ -1,6 +1,7 @@
 package net.flopzey.bot.commands.categories.fun;
 
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
@@ -10,9 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 @Command(
-        aliases = {"r", "rand", "random"},
-        description = "very nice description",
-        usage = "`placeholder`",
+        alias = {"random"},
+        description = "Selects a random user",
         category = Command.Category.FUN
 )
 public class RandomCommand extends BaseCommand {
@@ -42,6 +42,11 @@ public class RandomCommand extends BaseCommand {
         //event.getTextChannel().sendMessage(msg).queue();
         event.getChannel().sendMessage(msg).queue();
 
+
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
     }
 

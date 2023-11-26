@@ -2,7 +2,9 @@ package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
@@ -15,9 +17,12 @@ import java.util.List;
 import java.util.StringJoiner;
 
 
-@Command(aliases = {"who", "whois"},
-        usage = "whois [name/id]",
+@Command(alias = {"whois"},
         description = "Get information about a user.",
+        enableOptions = true,
+        optionType = OptionType.STRING,
+        optionParameter = "name",
+        parameterDescriptions = "Name/UID from a user",
         category = Command.Category.GENERAL
 )
 public class WhoIsCommand extends BaseCommand {
@@ -79,6 +84,11 @@ public class WhoIsCommand extends BaseCommand {
 
     }
 
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
+
+    }
+
     private String getActivity(Member member) {
 
         String result = "No Activities!";
@@ -120,3 +130,4 @@ public class WhoIsCommand extends BaseCommand {
     }
 
 }
+
