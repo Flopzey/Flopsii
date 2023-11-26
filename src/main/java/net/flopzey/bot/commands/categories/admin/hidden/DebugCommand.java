@@ -1,13 +1,17 @@
 package net.flopzey.bot.commands.categories.admin.hidden;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageHistory;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.core.BotConfig;
 
 @Command(
-        aliases = {"debug"},
+        alias = {"debug"},
+        description = "For testing!",
+        requiredPermission = Permission.ADMINISTRATOR,
         category = Command.Category.HIDDEN
 )
 
@@ -24,14 +28,12 @@ public class DebugCommand extends BaseCommand {
     @Override
     public void execute(String[] args, MessageReceivedEvent event) {
 
-        // delete initial message
-        event.getMessage().delete().queue();
-
-        //MessageHistory history = event.getTextChannel().getHistory();
-        MessageHistory history = event.getChannel().getHistory();
-
         System.out.println("debug");
 
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
     }
 

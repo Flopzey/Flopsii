@@ -1,15 +1,14 @@
 package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.core.BotConfig;
 import net.flopzey.bot.utils.BotUtils;
-import net.flopzey.bot.utils.Colors;
 
-@Command(aliases = {"inv", "invite"},
-        usage = "invite",
+@Command(alias = {"invite"},
         description = "Receive an invite-link for this bot.",
         category = Command.Category.GENERAL
 )
@@ -26,6 +25,11 @@ public class InviteCommand extends BaseCommand {
                         .setDescription("__**[Click to invite " + BotConfig.getBotName() + " to your server.](" + BotConfig.getInviteLink() + ")**__")
                         .build()
         ).queue();
+
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
     }
 

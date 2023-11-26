@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
@@ -15,8 +16,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Command(aliases = {"serverinfo"},
-        usage = "serverinfo",
+@Command(alias = {"serverinfo"},
         description = "Get information about the server.",
         category = Command.Category.GENERAL
 )
@@ -51,6 +51,11 @@ public class ServerInfoCommand extends BaseCommand {
 
         //event.getTextChannel().sendMessage(builder.build()).queue();
         event.getChannel().sendMessageEmbeds(builder.build()).queue();
+
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
     }
 

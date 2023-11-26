@@ -10,9 +10,11 @@ public class BotConfig {
 
     private static final String SECTION_SETUP = "Setup";
     private static final String SECTION_BOT_CONFIG = "BotConfig";
+    private static final String SECTION_OAUTH = "OAuth2";
 
     private static Profile.Section setup;
     private static Profile.Section botConfig;
+    private static Profile.Section oauth;
     private static String mode;
 
     static {
@@ -21,6 +23,7 @@ public class BotConfig {
             Ini ini = new Ini(new File("config.ini"));
             setup = ini.get(SECTION_SETUP);
             botConfig = ini.get(SECTION_BOT_CONFIG);
+            oauth = ini.get(SECTION_OAUTH);
 
             mode = Boolean.parseBoolean( setup.get("ProductionMode") ) ? "_Prod" : "_Dev";
         } catch (IOException ex) {
@@ -33,6 +36,7 @@ public class BotConfig {
         return botConfig.get("Token"+mode);
     }
 
+    @Deprecated
     public static String getCommandPrefix() {
         return botConfig.get("Command_Prefix");
     }

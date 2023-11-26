@@ -1,7 +1,9 @@
 package net.flopzey.bot.commands.categories.admin.hidden;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
@@ -12,7 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Command(
-        aliases = {"shutdown"},
+        alias = {"shutdown"},
+        description = "Shutsdown the bot",
+        requiredPermission = Permission.ADMINISTRATOR,
         category = Command.Category.HIDDEN
 )
 public class ShutdownCommand extends BaseCommand {
@@ -47,6 +51,11 @@ public class ShutdownCommand extends BaseCommand {
                 System.exit(0);
             }
         }, 5000);
+
+    }
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
     }
 
