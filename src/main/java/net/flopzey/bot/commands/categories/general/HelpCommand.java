@@ -9,7 +9,7 @@ import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 
 @Command(
-        alias = {"help"},
+        alias = "help",
         description = "Helps you...",
         category = Command.Category.GENERAL
 )

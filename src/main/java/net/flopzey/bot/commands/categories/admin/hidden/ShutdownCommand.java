@@ -5,6 +5,9 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.core.BotConfig;
@@ -14,9 +17,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Command(
-        alias = {"shutdown"},
+        alias = "shutdown",
         description = "Shutsdown the bot",
-        requiredPermission = Permission.ADMINISTRATOR,
         category = Command.Category.HIDDEN
 )
 public class ShutdownCommand extends BaseCommand {
@@ -26,6 +28,14 @@ public class ShutdownCommand extends BaseCommand {
     @Override
     public boolean preExecute(MessageReceivedEvent event) {
         return BotConfig.getDevID().equals(event.getMessage().getAuthor().getId());
+    }
+
+    @Override
+    public SlashCommandData initCommand() {
+
+        return Commands.slash(getInfo().alias(),getInfo().description())
+                .setGuildOnly(true)
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
     }
 
     @Override
@@ -46,7 +56,7 @@ public class ShutdownCommand extends BaseCommand {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
-                    // todo - Logger
+
                 }
                 System.exit(0);
             }

@@ -2,14 +2,15 @@ package net.flopzey.bot.commands.categories.admin;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageHistory;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
-import net.flopzey.bot.core.BotConfig;
-import net.flopzey.bot.utils.BotUtils;
 import net.flopzey.bot.utils.MessageUtils;
 
 import java.util.List;
@@ -17,79 +18,57 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Command(
-        alias = {"clear"},
+        alias = "clear",
         description = "Delete messages in the current text channel.",
-        enableOptions = true,
-        optionType = OptionType.INTEGER,
-        optionParameter = "value",
+        parameter = "value",
         parameterDescriptions = "Number of messages to delete",
-        requiredPermission = Permission.MESSAGE_MANAGE,
         category = Command.Category.ADMIN
 )
 public class ClearCommand extends BaseCommand {
 
     @Override
-    public boolean preExecute(MessageReceivedEvent event) {
-        return event.getMember().hasPermission(Permission.ADMINISTRATOR);
+    public SlashCommandData initCommand() {
+
+        return Commands.slash(getInfo().alias(),getInfo().description())
+                .setGuildOnly(true)
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE))
+                .addOption(OptionType.INTEGER, getInfo().parameter(), getInfo().parameterDescriptions(),true);
     }
 
     @Override
-    public void execute(String[] args, MessageReceivedEvent event) {
-
-        int count = (args.length > 0) ? BotUtils.parseInt(args[0]) : 0;
-
-        // delete call message
-        event.getMessage().delete().queue();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            // todo - Logger
-        }
-
-        //MessageHistory history = event.getTextChannel().getHistory();
-        MessageHistory history = event.getChannel().asTextChannel().getHistory();
-        List<Message> messageHistory;
-
-        if (count > 0 && count < 100) {
-            messageHistory = history.retrievePast(count).complete();
-
-            if (messageHistory.size() == 1) {
-                messageHistory.get(0).delete().queue();
-            } else {
-                //event.getTextChannel().deleteMessages(messageHistory).queue();
-                event.getChannel().asTextChannel().deleteMessages(messageHistory).queue();
-            }
-
-            //Message message = event.getTextChannel().sendMessage(
-            Message message = event.getChannel().sendMessageEmbeds(
-                            MessageUtils.getSuccessMessage("Deleted messages: " + count))
-                    .complete();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    message.delete().queue();
-                }
-            }, 3000);
-
-        } else {
-
-            String warnMessageText = "**Syntax Error:**\n" + BotConfig.getCommandPrefix() + getInfo().optionParameter();
-            //event.getTextChannel().sendMessage(MessageUtils.getWarnMessage(warnMessageText)).queue();
-            event.getChannel().sendMessageEmbeds(MessageUtils.getWarnMessage((warnMessageText))).queue();
-
-        }
-
-    }
+    public void execute(String[] args, MessageReceivedEvent event) {}
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
-        System.out.println("success");
+        //Enables "Bot is thinking..."
+        //ephemeral = true | Only visible to command author
+        event.deferReply(true).queue();
 
-        // visable for all users
-        event.reply("Test").queue();
+        SlashCommandInteraction interaction = event.getInteraction();
+        int count = interaction.getOption(getInfo().parameter()).getAsInt();
+
+        if (count >= 2 && count < 100){
+
+            List<Message> messageHistory = event.getMessageChannel().getHistory().retrievePast(count).complete();
+            event.getChannel().asTextChannel().deleteMessages(messageHistory).queue();
+
+            event.getHook().editOriginalEmbeds(MessageUtils.getSuccessMessage("Deleted messages: " + count)).queue();
+
+        } else {
+
+            event.getHook().editOriginalEmbeds(MessageUtils.getWarnMessage("The value must be between 2 and 99!")).queue();
+
+        }
+
+        //Deletes message after 5 seconds.
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                event.getHook().deleteOriginal().queue();
+            }
+        }, 5000);
 
     }
 
 }
-

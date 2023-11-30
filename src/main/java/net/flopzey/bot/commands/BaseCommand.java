@@ -2,6 +2,8 @@ package net.flopzey.bot.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 public abstract class BaseCommand {
 
@@ -14,6 +16,11 @@ public abstract class BaseCommand {
 
     public boolean preExecute(SlashCommandInteractionEvent event) {
         return true;
+    }
+
+    public SlashCommandData initCommand() {
+        return Commands.slash(commandInfo.alias(),commandInfo.description())
+                .setGuildOnly(true);
     }
 
     @Deprecated

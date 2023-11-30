@@ -8,6 +8,10 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
@@ -16,7 +20,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Command(alias = {"serverinfo"},
+@Command(alias = "serverinfo",
         description = "Get information about the server.",
         category = Command.Category.GENERAL
 )
@@ -26,6 +30,14 @@ public class ServerInfoCommand extends BaseCommand {
     @Override
     public boolean preExecute(MessageReceivedEvent event) {
         return event.getMember().hasPermission(Permission.VIEW_AUDIT_LOGS);
+    }
+
+    @Override
+    public SlashCommandData initCommand() {
+
+        return Commands.slash(getInfo().alias(),getInfo().description())
+                .setGuildOnly(true)
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.VIEW_AUDIT_LOGS));
     }
 
     @Override
