@@ -42,9 +42,7 @@ public class CommandRegistry {
             throw new IllegalStateException("No command annotation found!");
         }
 
-        for (String alias : command.getInfo().alias()) {
-            registerCommand(alias, command);
-        }
+        registerCommand(command.getInfo().alias(), command);
 
     }
 

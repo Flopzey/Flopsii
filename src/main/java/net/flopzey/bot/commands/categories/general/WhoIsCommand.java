@@ -1,10 +1,14 @@
 package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
@@ -17,18 +21,26 @@ import java.util.List;
 import java.util.StringJoiner;
 
 
-@Command(alias = {"whois"},
+@Command(alias = "whois",
         description = "Get information about a user.",
-        enableOptions = true,
-        optionType = OptionType.STRING,
-        optionParameter = "name",
-        parameterDescriptions = "Name/UID from a user",
+        parameter = "user",
+        parameterDescriptions = "Name from a user",
         category = Command.Category.GENERAL
 )
 public class WhoIsCommand extends BaseCommand {
 
     @Override
+    public SlashCommandData initCommand() {
+
+        return Commands.slash(getInfo().alias(),getInfo().description())
+                .setGuildOnly(true)
+                .addOption(OptionType.USER, getInfo().parameter(), getInfo().parameterDescriptions(),true);
+    }
+
+    @Override
     public void execute(String[] args, MessageReceivedEvent event) {
+
+        //Change into only using a "user"
 
         final Member member;
 
