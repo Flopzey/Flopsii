@@ -62,12 +62,12 @@ public class ClearCommand extends BaseCommand {
         }
 
         //Deletes message after 4 seconds.
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                event.getHook().deleteOriginal().queue();
-            }
-        }, 4000);
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                event.getHook().deleteOriginal().queue();
+//            }
+//        }, 4000);
     }
 
 }
