@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.managers.RoleManager;
+import net.dv8tion.jda.api.utils.cache.MemberCacheView;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
@@ -28,20 +30,18 @@ import java.util.List;
 public class ServerInfoCommand extends BaseCommand {
 
     @Override
-    public boolean preExecute(MessageReceivedEvent event) {
-        return event.getMember().hasPermission(Permission.VIEW_AUDIT_LOGS);
-    }
-
-    @Override
     public SlashCommandData initCommand() {
 
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
-                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.VIEW_AUDIT_LOGS));
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_SEND));
     }
 
     @Override
-    public void execute(String[] args, MessageReceivedEvent event) {
+    public void execute(String[] args, MessageReceivedEvent event) {}
+
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
         final Guild guild = event.getGuild();
         final User owner = guild.getOwner().getUser();
@@ -49,10 +49,10 @@ public class ServerInfoCommand extends BaseCommand {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(BotUtils.getBotColor(event))
                 .setAuthor(guild.getName(), null, guild.getIconUrl())
-                .addField("General Information", "Server Creation: " + guild.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME) + "\nRegion: " + guild.getLocale().name(), false)
-                .addField("Owner", owner.getAsTag(), false)
+                .addField("General Information", "Server Creation: " + guild.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME), false)
+                .addField("Owner", owner.getGlobalName() + " ("+owner.getName()+")", false)
                 .addField("Channels", getChannelInfo(guild), false)
-                .addField("Members", getMemberInfo(guild), false)
+                .addField("Members", guild.getMemberCount() + " members", false)
                 .addField(" Roles", guild.getRoles().size() + " roles", false)
                 .setFooter(event.getJDA().getSelfUser().getName(), event.getJDA().getSelfUser().getEffectiveAvatarUrl())
                 .setTimestamp(Instant.now());
@@ -61,14 +61,11 @@ public class ServerInfoCommand extends BaseCommand {
             builder.addField("Boost", guild.getBoostTier().name() + "\n" + guild.getBoostCount() + " boosts from " + guild.getBoosters().size() + " members", false);
         }
 
-        //event.getTextChannel().sendMessage(builder.build()).queue();
-        event.getChannel().sendMessageEmbeds(builder.build()).queue();
+        if (guild.getVanityUrl() != null) {
+            builder.addField("Vanity URL", guild.getVanityUrl(), false);
+        }
 
-    }
-
-    @Override
-    public void execute(SlashCommandInteractionEvent event) {
-
+        event.replyEmbeds(builder.build()).queue();
     }
 
     private String getChannelInfo(final Guild guild) {
@@ -80,6 +77,7 @@ public class ServerInfoCommand extends BaseCommand {
                 + textChannels.size() + " text | " + voiceChannels.size() + " voice");
     }
 
+    @Deprecated
     private String getMemberInfo(final Guild guild) {
 
         List<Member> memberList = guild.getMembers();

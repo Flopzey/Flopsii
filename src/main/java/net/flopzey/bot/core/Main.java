@@ -19,19 +19,17 @@ public class Main {
 
     public static void main(String args[]) throws InterruptedException {
 
-        // init command
+        // init commands
         new CommandRegistry();
 
         JDA jda = JDABuilder.createDefault(BotConfig.getBotToken())
                 .addEventListeners(new CommandListener())
                 .setActivity(Activity.customStatus(ACTIVITY))
                 .build();
-
         jda.awaitReady();
-        loadCommands(jda);
 
         Message.suppressContentIntentWarning();
-
+        loadCommands(jda);
     }
 
     private static void loadCommands(JDA jda){
@@ -47,9 +45,6 @@ public class Main {
         jda.updateCommands()
            .addCommands(commands)
            .queue();
-
     }
-}
 
-// https://discord.com/oauth2/authorize?client_id=354635725024526339&scope=bot&permissions=8
-// https://discord.com/oauth2/authorize?client_id=356416487956676608&scope=bot&permissions=8
+}

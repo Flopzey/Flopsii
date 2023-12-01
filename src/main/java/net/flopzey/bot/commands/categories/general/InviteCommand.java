@@ -26,7 +26,6 @@ public class InviteCommand extends BaseCommand {
                         .setDescription("__**[Click to invite " + BotConfig.getBotName() + " to your server.](" + BotConfig.getInviteLink() + ")**__")
                         .build()
                 ).queue();
-
     }
 
 }

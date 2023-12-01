@@ -15,16 +15,11 @@ import net.flopzey.bot.core.BotConfig;
         description = "Internal Command, for Testing only!",
         category = Command.Category.HIDDEN
 )
-
-/**
- * This command is only for testing and should be only used in dev-mode
- */
 public class DebugCommand extends BaseCommand {
 
     @Override
     public boolean preExecute(SlashCommandInteractionEvent event) {
-        //return !BotConfig.isProductionMode() && BotConfig.getDevID().equals(event.getMessage().getAuthor().getId());
-        return true;
+        return !BotConfig.isProductionMode();
     }
 
     @Override
@@ -41,8 +36,7 @@ public class DebugCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
-        System.out.println("Debug");
-
+        event.reply("Success!").setEphemeral(true).queue();
     }
 
 }

@@ -23,13 +23,11 @@ public class CommandListener extends ListenerAdapter {
                 && msg.getContentRaw().startsWith(BotConfig.getCommandPrefix())) {
             CommandInvoker.invoke(parser.parse(event.getMessage().getContentRaw(), event));
         }
-
     }
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
 
         CommandInvoker.invoke(event);
-
     }
 }

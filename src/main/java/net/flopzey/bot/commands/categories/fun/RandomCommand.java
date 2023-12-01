@@ -12,42 +12,28 @@ import java.util.Random;
 
 @Command(
         alias = "random",
-        description = "Selects a random user",
+        description = "Selects a random user.",
         category = Command.Category.FUN
 )
 public class RandomCommand extends BaseCommand {
 
     @Override
-    public void execute(String[] args, MessageReceivedEvent event) {
+    public void execute(String[] args, MessageReceivedEvent event) {}
 
-        // proof of concept
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
-        //List<Member> memberList = event.getTextChannel().getMembers();
         List<Member> memberList = event.getChannel().asTextChannel().getMembers();
         List<Member> pickList = new ArrayList<>();
 
         for (Member m : memberList) {
-
-            if (!m.getUser().isBot()) {
-                pickList.add(m);
-            }
-
+            if (!m.getUser().isBot()) { pickList.add(m); }
         }
 
         Random rand = new Random();
         Member pick = pickList.get(rand.nextInt(pickList.size()));
 
-        String msg = pick.getAsMention();
-
-        //event.getTextChannel().sendMessage(msg).queue();
-        event.getChannel().sendMessage(msg).queue();
-
-
-    }
-
-    @Override
-    public void execute(SlashCommandInteractionEvent event) {
-
+        event.reply(pick.getAsMention()).queue();
     }
 
 }

@@ -2,6 +2,7 @@ package net.flopzey.bot.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.flopzey.bot.utils.MessageUtils;
 
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class CommandInvoker {
             }
 
         }
-
     }
 
     public static void invoke(SlashCommandInteractionEvent event) {
@@ -36,10 +36,11 @@ public class CommandInvoker {
 
             if (isAllowed) {
                 cmd.execute(event);
+            } else {
+                event.replyEmbeds(MessageUtils.getWarnMessage("You're not allowed to execute this command!")).setEphemeral(true).queue();
             }
 
         }
-
     }
 
 }

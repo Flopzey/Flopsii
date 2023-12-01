@@ -28,7 +28,6 @@ public class CommandRegistry {
                 ex.printStackTrace();
             }
         }
-
     }
 
     public static Map<String, BaseCommand> getCommandMap() {
@@ -43,7 +42,6 @@ public class CommandRegistry {
         }
 
         registerCommand(command.getInfo().alias(), command);
-
     }
 
     private void registerCommand(String alias, BaseCommand command) {

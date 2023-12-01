@@ -31,7 +31,7 @@ public class ClearCommand extends BaseCommand {
 
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
-                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE))
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                 .addOption(OptionType.INTEGER, getInfo().parameter(), getInfo().parameterDescriptions(),true);
     }
 
@@ -61,14 +61,13 @@ public class ClearCommand extends BaseCommand {
 
         }
 
-        //Deletes message after 5 seconds.
+        //Deletes message after 4 seconds.
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 event.getHook().deleteOriginal().queue();
             }
-        }, 5000);
-
+        }, 4000);
     }
 
 }

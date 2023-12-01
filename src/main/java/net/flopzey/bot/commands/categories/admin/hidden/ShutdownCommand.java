@@ -18,16 +18,16 @@ import java.util.TimerTask;
 
 @Command(
         alias = "shutdown",
-        description = "Shutsdown the bot",
+        description = "Shuts down the bot.",
         category = Command.Category.HIDDEN
 )
 public class ShutdownCommand extends BaseCommand {
 
-    private static final String SHUTDOWN_MESSAGE = "Bot will shutdown in 5 seconds!";
+    private static final String SHUTDOWN_MESSAGE = "Bot will shut down...";
 
     @Override
-    public boolean preExecute(MessageReceivedEvent event) {
-        return BotConfig.getDevID().equals(event.getMessage().getAuthor().getId());
+    public boolean preExecute(SlashCommandInteractionEvent event) {
+        return BotConfig.getDevID().equals(event.getMember().getId());
     }
 
     @Override
@@ -39,20 +39,20 @@ public class ShutdownCommand extends BaseCommand {
     }
 
     @Override
-    public void execute(String[] args, MessageReceivedEvent event) {
+    public void execute(String[] args, MessageReceivedEvent event) {}
 
-        // delete initial message
-        event.getMessage().delete().queue();
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
 
-        EmbedBuilder builder = new EmbedBuilder().setColor(Colors.DISCORD_RED).setDescription(SHUTDOWN_MESSAGE);
-        //Message message = event.getTextChannel().sendMessage(builder.build()).complete();
-        Message message = event.getChannel().sendMessageEmbeds(builder.build()).complete();
+        event.replyEmbeds(
+                new EmbedBuilder().setColor(Colors.DISCORD_RED).setDescription(SHUTDOWN_MESSAGE).build()
+        ).setEphemeral(true).queue();
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                message.delete().queue();
-                event.getJDA().shutdownNow();
+                event.getHook().deleteOriginal().queue();
+                event.getJDA().shutdown();
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
@@ -61,12 +61,6 @@ public class ShutdownCommand extends BaseCommand {
                 System.exit(0);
             }
         }, 5000);
-
-    }
-
-    @Override
-    public void execute(SlashCommandInteractionEvent event) {
-
     }
 
 }
