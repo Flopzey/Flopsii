@@ -10,6 +10,6 @@ public class Colors {
     public static final Color DISCORD_RED = new Color(240, 71, 71);
     public static final Color DISCORD_YELLOW = new Color(250, 166, 26);
     public static final Color DISCORD_GREEN = new Color(67, 181, 129);
-    public static final Color DISCORD_PURPLE = new Color(89, 54, 149);
+    public static final Color DISCORD_BLUE = new Color(88, 101, 242);
 
 }

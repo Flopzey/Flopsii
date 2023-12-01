@@ -15,11 +15,12 @@ public class BotUtils {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException ex) {
-            // todo - Logger
+
             return 0;
         }
     }
 
+    @Deprecated
     public static Color getBotColor( MessageReceivedEvent event ) {
 
         Color color = event.getGuild().getMemberById( event.getJDA().getSelfUser().getId() ).getColor();
@@ -29,7 +30,6 @@ public class BotUtils {
         }
 
         return color;
-
     }
 
     public static Color getBotColor( SlashCommandInteractionEvent event ) {
@@ -41,32 +41,6 @@ public class BotUtils {
         }
 
         return color;
-
-    }
-
-    // todo - check if improvement needed
-    public static Member getMember(MessageReceivedEvent event, String user) {
-
-        Member member;
-        user = removeMention(user);
-
-        if (user.matches("\\d+")) {
-
-            member = event.getGuild().getMemberById(user);
-
-        } else {
-
-            List<Member> list = event.getGuild().getMembersByName(user, true);
-
-            if (list.isEmpty()) {
-                list = event.getGuild().getMembersByNickname(user, true);
-            }
-
-            member = list.isEmpty() ? null : list.get(0);
-
-        }
-
-        return member;
     }
 
     private static String removeMention(String name) {
