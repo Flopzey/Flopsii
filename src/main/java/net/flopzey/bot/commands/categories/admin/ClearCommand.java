@@ -28,7 +28,7 @@ public class ClearCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
-
+        logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
@@ -40,6 +40,8 @@ public class ClearCommand extends BaseCommand {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+
+        logger.info("Command called " + getInfo().alias());
 
         //Enables "Bot is thinking..."
         //ephemeral = true | Only visible to command author

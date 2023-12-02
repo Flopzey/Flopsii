@@ -2,7 +2,6 @@ package net.flopzey.bot.commands.categories.admin.hidden;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -32,7 +31,7 @@ public class ShutdownCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
-
+        logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
@@ -44,6 +43,7 @@ public class ShutdownCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         event.replyEmbeds(
                 new EmbedBuilder().setColor(Colors.DISCORD_RED).setDescription(SHUTDOWN_MESSAGE).build()
         ).setEphemeral(true).queue();
@@ -56,7 +56,7 @@ public class ShutdownCommand extends BaseCommand {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
-
+                    logger.error(ex.toString());
                 }
                 System.exit(0);
             }

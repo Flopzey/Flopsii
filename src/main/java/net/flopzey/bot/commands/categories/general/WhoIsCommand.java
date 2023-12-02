@@ -1,19 +1,15 @@
 package net.flopzey.bot.commands.categories.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
-import net.flopzey.bot.utils.BotUtils;
-import net.flopzey.bot.utils.MessageUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Instant;
@@ -32,7 +28,7 @@ public class WhoIsCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
-
+        logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .addOption(OptionType.USER, getInfo().parameter(), getInfo().parameterDescriptions(),true);
@@ -44,6 +40,7 @@ public class WhoIsCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         event.deferReply().queue();
 
         SlashCommandInteraction interaction = event.getInteraction();

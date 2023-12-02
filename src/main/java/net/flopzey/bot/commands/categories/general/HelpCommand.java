@@ -3,15 +3,12 @@ package net.flopzey.bot.commands.categories.general;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.commands.CommandRegistry;
 import net.flopzey.bot.core.BotConfig;
-import net.flopzey.bot.utils.BotUtils;
 import net.flopzey.bot.utils.Colors;
 
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class HelpCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         event.reply("Check your private messages.").setEphemeral(true).queue();
         event.getMember().getUser().openPrivateChannel().queue((channel) -> channel.sendMessageEmbeds(createHelpMessage(event)).queue());
     }

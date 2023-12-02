@@ -23,6 +23,7 @@ public class RandomCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         List<Member> memberList = event.getChannel().asTextChannel().getMembers();
         List<Member> pickList = new ArrayList<>();
 

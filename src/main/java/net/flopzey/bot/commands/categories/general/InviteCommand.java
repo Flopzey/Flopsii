@@ -20,6 +20,7 @@ public class InviteCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         event.replyEmbeds(
                 new EmbedBuilder().setColor(BotUtils.getBotColor(event))
                         .setTitle("Get " + BotConfig.getBotName() + " on your server!")

@@ -2,6 +2,8 @@ package net.flopzey.bot.core;
 
 import org.ini4j.Ini;
 import org.ini4j.Profile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,8 @@ public class BotConfig {
     private static Profile.Section botConfig;
     private static String mode;
 
+    private static final Logger logger = LoggerFactory.getLogger(BotConfig.class);
+
     static {
 
         try {
@@ -24,7 +28,7 @@ public class BotConfig {
 
             mode = Boolean.parseBoolean( setup.get("ProductionMode") ) ? "_Prod" : "_Dev";
         } catch (IOException ex) {
-            // todo - Logger
+            logger.error(ex.toString());
         }
 
     }
