@@ -1,7 +1,6 @@
 package net.flopzey.bot.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.flopzey.bot.utils.MessageUtils;
 
 import java.util.Map;

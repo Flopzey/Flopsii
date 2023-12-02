@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.CommandRegistry;
 import net.flopzey.bot.listeners.CommandListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,12 +18,16 @@ import java.util.Map;
 public class Main {
 
     private static final String ACTIVITY = "Hello, World. Again!";
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String args[]) throws InterruptedException {
+
+        logger.info("Application starting...");
 
         // init commands
         new CommandRegistry();
 
+        // build jda
         JDA jda = JDABuilder.createDefault(BotConfig.getBotToken())
                 .addEventListeners(new CommandListener())
                 .setActivity(Activity.customStatus(ACTIVITY))
@@ -34,6 +40,7 @@ public class Main {
 
     private static void loadCommands(JDA jda){
 
+        logger.info("Loading commands...");
         Map<String, BaseCommand> commandMap = CommandRegistry.getCommandMap();
         ArrayList<SlashCommandData> commands = new ArrayList<SlashCommandData>();
 
@@ -45,6 +52,7 @@ public class Main {
         jda.updateCommands()
            .addCommands(commands)
            .queue();
+        logger.info("Commands loaded successfully!");
     }
 
 }

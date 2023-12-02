@@ -17,6 +17,8 @@ import net.flopzey.bot.core.BotConfig;
 )
 public class DebugCommand extends BaseCommand {
 
+//    private static final Logger logger = LoggerFactory.getLogger(DebugCommand.class);
+
     @Override
     public boolean preExecute(SlashCommandInteractionEvent event) {
         return !BotConfig.isProductionMode();
@@ -25,6 +27,7 @@ public class DebugCommand extends BaseCommand {
     @Override
     public SlashCommandData initCommand() {
 
+        logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
@@ -36,6 +39,7 @@ public class DebugCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         event.reply("Success!").setEphemeral(true).queue();
     }
 

@@ -9,11 +9,8 @@ import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-import net.dv8tion.jda.api.managers.RoleManager;
-import net.dv8tion.jda.api.utils.cache.MemberCacheView;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.BotUtils;
@@ -31,7 +28,7 @@ public class ServerInfoCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
-
+        logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_SEND));
@@ -43,6 +40,7 @@ public class ServerInfoCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
+        logger.info("Command called " + getInfo().alias());
         final Guild guild = event.getGuild();
         final User owner = guild.getOwner().getUser();
 

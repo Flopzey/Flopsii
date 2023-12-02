@@ -4,10 +4,13 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class BaseCommand {
 
     private final Command commandInfo = this.getClass().getAnnotation(Command.class);
+    protected static final Logger logger = LoggerFactory.getLogger(BaseCommand.class);
 
     @Deprecated
     public boolean preExecute(MessageReceivedEvent event) {
@@ -19,6 +22,8 @@ public abstract class BaseCommand {
     }
 
     public SlashCommandData initCommand() {
+
+        logger.debug("Initialize command " + commandInfo.alias());
         return Commands.slash(commandInfo.alias(),commandInfo.description())
                 .setGuildOnly(true);
     }

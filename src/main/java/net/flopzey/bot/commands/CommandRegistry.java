@@ -1,6 +1,8 @@
 package net.flopzey.bot.commands;
 
 import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +14,7 @@ public class CommandRegistry {
 
     private static final String COMMAND_PATH = "net.flopzey.bot.commands.categories";
     private static Map<String, BaseCommand> commandMap;
+    private static final Logger logger = LoggerFactory.getLogger(CommandRegistry.class);
 
     public CommandRegistry() {
 
@@ -25,7 +28,7 @@ public class CommandRegistry {
                 Constructor<? extends BaseCommand> constructor = cmdClass.getConstructor();
                 register(constructor.newInstance());
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-                ex.printStackTrace();
+                logger.error(ex.toString());
             }
         }
     }
