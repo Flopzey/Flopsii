@@ -1,7 +1,7 @@
 package net.flopzey.bot.commands.categories.admin;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -13,27 +13,22 @@ import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.MessageUtils;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 @Command(
-        alias = "clear",
-        description = "Delete messages in the current text channel.",
+        alias = "activity",
+        description = "Changes the displayed activity.",
         parameter = "value",
-        parameterDescriptions = "Number of messages to delete",
+        parameterDescriptions = "New activity",
         category = Command.Category.ADMIN
 )
-public class ClearCommand extends BaseCommand {
+public class ActivityCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
-
         logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
-                .addOption(OptionType.INTEGER, getInfo().parameter(), getInfo().parameterDescriptions(),true);
+                .addOption(OptionType.STRING, getInfo().parameter(), getInfo().parameterDescriptions(),true);
     }
 
     @Override
@@ -44,33 +39,15 @@ public class ClearCommand extends BaseCommand {
 
         logger.info("Command called " + getInfo().alias());
 
-        //Enables "Bot is thinking..."
-        //ephemeral = true | Only visible to command author
-        event.deferReply(true).queue();
-
         SlashCommandInteraction interaction = event.getInteraction();
-        int count = interaction.getOption(getInfo().parameter()).getAsInt();
+        String newActivity = interaction.getOption(getInfo().parameter()).getAsString();
+        String oldActivity = event.getJDA().getPresence().getActivity().toString();
 
-        if (count >= 2 && count < 100){
+        event.getJDA().getPresence().setActivity(Activity.customStatus(newActivity));
+        logger.info("Changed displayed activity from " + oldActivity + " to " + newActivity);
 
-            List<Message> messageHistory = event.getMessageChannel().getHistory().retrievePast(count).complete();
-            event.getChannel().asTextChannel().deleteMessages(messageHistory).queue();
+        event.replyEmbeds(MessageUtils.getSuccessMessage("Activity changed!")).setEphemeral(true).queue();
 
-            event.getHook().editOriginalEmbeds(MessageUtils.getSuccessMessage("Deleted messages: " + count)).queue();
-
-        } else {
-
-            event.getHook().editOriginalEmbeds(MessageUtils.getWarnMessage("The value must be between 2 and 99!")).queue();
-
-        }
-
-        //Deletes message after 4 seconds.
-//        new Timer().schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                event.getHook().deleteOriginal().queue();
-//            }
-//        }, 4000);
     }
 
 }

@@ -6,9 +6,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.core.BotConfig;
+
+import java.time.Duration;
 
 @Command(
         alias = "debug",
@@ -16,8 +19,6 @@ import net.flopzey.bot.core.BotConfig;
         category = Command.Category.HIDDEN
 )
 public class DebugCommand extends BaseCommand {
-
-//    private static final Logger logger = LoggerFactory.getLogger(DebugCommand.class);
 
     @Override
     public boolean preExecute(SlashCommandInteractionEvent event) {
@@ -39,8 +40,14 @@ public class DebugCommand extends BaseCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
 
-        logger.info("Command called " + getInfo().alias());
-        event.reply("Success!").setEphemeral(true).queue();
+        logger.info(event.getMember().getEffectiveName() + "Command called " + getInfo().alias() + " on server " + event.getGuild().getName() );
+
+        event.getJDA().getRestPing().queue( (time) ->
+                event.getChannel().sendMessageFormat("Ping: %d ms", time).queue()
+        );
+
+        event.reply("Result!").queue();
+
     }
 
 }

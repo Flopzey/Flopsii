@@ -35,4 +35,5 @@ public class CommandListener extends ListenerAdapter {
         logger.debug("SlashCommandInteractionEvent detected");
         CommandInvoker.invoke(event);
     }
+
 }

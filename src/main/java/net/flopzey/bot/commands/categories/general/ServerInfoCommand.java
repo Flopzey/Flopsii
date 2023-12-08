@@ -28,6 +28,7 @@ public class ServerInfoCommand extends BaseCommand {
 
     @Override
     public SlashCommandData initCommand() {
+
         logger.debug("Initialize command " + getInfo().alias());
         return Commands.slash(getInfo().alias(),getInfo().description())
                 .setGuildOnly(true)
