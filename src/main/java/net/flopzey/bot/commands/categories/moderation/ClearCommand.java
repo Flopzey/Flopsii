@@ -1,4 +1,4 @@
-package net.flopzey.bot.commands.categories.admin;
+package net.flopzey.bot.commands.categories.moderation;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
@@ -14,15 +14,13 @@ import net.flopzey.bot.commands.Command;
 import net.flopzey.bot.utils.MessageUtils;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Command(
         alias = "clear",
         description = "Delete messages in the current text channel.",
         parameter = "value",
         parameterDescriptions = "Number of messages to delete",
-        category = Command.Category.ADMIN
+        category = Command.Category.MODERATION
 )
 public class ClearCommand extends BaseCommand {
 

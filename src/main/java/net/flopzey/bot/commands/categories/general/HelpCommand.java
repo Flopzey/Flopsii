@@ -37,6 +37,7 @@ public class HelpCommand extends BaseCommand {
         Map<String, BaseCommand> commandMap = CommandRegistry.getCommandMap();
         ArrayList<BaseCommand> commandsGeneral = new ArrayList<BaseCommand>();
         ArrayList<BaseCommand> commandsFun = new ArrayList<BaseCommand>();
+        ArrayList<BaseCommand> commandsModeration = new ArrayList<BaseCommand>();
         ArrayList<BaseCommand> commandsAdmin = new ArrayList<BaseCommand>();
         ArrayList<BaseCommand> commandsHidden = new ArrayList<BaseCommand>();
 
@@ -48,6 +49,9 @@ public class HelpCommand extends BaseCommand {
                     break;
                 case FUN:
                     commandsFun.add(entry.getValue());
+                    break;
+                case MODERATION:
+                    commandsModeration.add(entry.getValue());
                     break;
                 case ADMIN:
                     commandsAdmin.add(entry.getValue());
@@ -66,7 +70,8 @@ public class HelpCommand extends BaseCommand {
                         + "\nUse `/` to execute commands.")
                         .addField("⚙️ Category: General",buildCommandOverview(commandsGeneral),false)
                         .addField("🎉 Category: Fun",buildCommandOverview(commandsFun),false);
-        if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){builder.addField("🚔 Category: Admin", buildCommandOverview(commandsAdmin),false);}
+        if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){builder.addField("🚔 Category: Moderation", buildCommandOverview(commandsModeration),false);}
+        if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){builder.addField("👨🏻‍💻 Category: Admin", buildCommandOverview(commandsAdmin),false);} //todo - Other form of verification
         if(BotConfig.getDevID().equals(event.getMember().getId())){builder.addField("🕵️‍♂️ Category: Hidden", buildCommandOverview(commandsHidden),false);}
 
         return builder.build();

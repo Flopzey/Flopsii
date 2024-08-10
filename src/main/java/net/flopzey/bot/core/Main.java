@@ -41,6 +41,8 @@ public class Main {
 
     private static void loadCommands(JDA jda){
 
+        //if command isn't visible in discord reload via ctrl+r
+
         logger.info("Loading commands...");
         Map<String, BaseCommand> commandMap = CommandRegistry.getCommandMap();
         ArrayList<SlashCommandData> commands = new ArrayList<SlashCommandData>();
