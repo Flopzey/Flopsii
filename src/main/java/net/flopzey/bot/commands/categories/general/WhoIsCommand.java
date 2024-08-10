@@ -51,7 +51,8 @@ public class WhoIsCommand extends BaseCommand {
         EmbedBuilder builder = new EmbedBuilder();
 
         String userInfo = "Account Creation: " + user.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME)
-                + "\nStatus: " + StringUtils.capitalize(member.getOnlineStatus().getKey());
+                /*+ "\nStatus: " + StringUtils.capitalize(member.getOnlineStatus().getKey())*/;
+                //doesn't work due lack of privilege
 
         String memberInfo = "Joined Server: " + member.getTimeJoined().format(DateTimeFormatter.RFC_1123_DATE_TIME)
                 + "\nNickname: " + (member.getNickname() != null ? member.getNickname() : "N/A");
