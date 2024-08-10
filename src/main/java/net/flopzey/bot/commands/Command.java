@@ -20,7 +20,7 @@ public @interface Command {
     Category category();
 
     enum Category {
-        ADMIN, HIDDEN, FUN, GENERAL
+        ADMIN, HIDDEN, FUN, GENERAL, MODERATION
     }
 
 }
