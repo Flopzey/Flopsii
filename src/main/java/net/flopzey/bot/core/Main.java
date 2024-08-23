@@ -12,6 +12,7 @@ import net.flopzey.bot.listeners.GeneralListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -24,6 +25,9 @@ public class Main {
     public static void main(String args[]) throws InterruptedException {
 
         logger.info("Application starting...");
+        logger.debug( "GUI is " + (BotConfig.isGuiEnabled() ? "enabled" : "disabled" )  );
+        // load gui
+        if (BotConfig.isGuiEnabled()) loadGui();
 
         // init commands
         new CommandRegistry();
@@ -37,6 +41,23 @@ public class Main {
 
         Message.suppressContentIntentWarning();
         loadCommands(jda);
+    }
+
+    private static void loadGui(){
+
+        logger.info("Initialize  gui...");
+
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                 | UnsupportedLookAndFeelException e) {
+
+            logger.error( e.getMessage() );
+
+        }
+
+        logger.info("GUI initialized!");
+
     }
 
     private static void loadCommands(JDA jda){
