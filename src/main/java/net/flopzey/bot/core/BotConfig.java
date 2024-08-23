@@ -58,4 +58,6 @@ public class BotConfig {
 
     public static Boolean isProductionMode() { return Boolean.parseBoolean(setup.get("ProductionMode")); }
 
+    public static Boolean isGuiEnabled() { return Boolean.parseBoolean(setup.get("UseGui")); }
+
 }
