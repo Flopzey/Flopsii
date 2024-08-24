@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.CommandRegistry;
+import net.flopzey.bot.gui.ConsolePanel;
+import net.flopzey.bot.gui.MainFrame;
 import net.flopzey.bot.listeners.CommandListener;
 import net.flopzey.bot.listeners.GeneralListener;
 import org.slf4j.Logger;
@@ -26,8 +28,6 @@ public class Main {
 
         logger.info("Application starting...");
         logger.debug( "GUI is " + (BotConfig.isGuiEnabled() ? "enabled" : "disabled" )  );
-        // load gui
-        if (BotConfig.isGuiEnabled()) loadGui();
 
         // init commands
         new CommandRegistry();
@@ -41,9 +41,12 @@ public class Main {
 
         Message.suppressContentIntentWarning();
         loadCommands(jda);
+
+        // load gui
+        if (BotConfig.isGuiEnabled()) loadGui(jda);
     }
 
-    private static void loadGui(){
+    private static void loadGui( JDA jda){
 
         logger.info("Initialize  gui...");
 
@@ -53,11 +56,11 @@ public class Main {
                  | UnsupportedLookAndFeelException e) {
 
             logger.error( e.getMessage() );
-
         }
 
-        logger.info("GUI initialized!");
+        new MainFrame(jda);
 
+        logger.info("GUI initialized!");
     }
 
     private static void loadCommands(JDA jda){
