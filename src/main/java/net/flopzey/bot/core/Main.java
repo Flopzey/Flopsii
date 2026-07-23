@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.flopzey.bot.commands.BaseCommand;
 import net.flopzey.bot.commands.CommandRegistry;
-import net.flopzey.bot.gui.ConsolePanel;
 import net.flopzey.bot.gui.MainFrame;
 import net.flopzey.bot.listeners.CommandListener;
 import net.flopzey.bot.listeners.GeneralListener;
@@ -46,21 +45,20 @@ public class Main {
         if (BotConfig.isGuiEnabled()) loadGui(jda);
     }
 
-    private static void loadGui( JDA jda){
+    private static void loadGui(JDA jda) {
+        logger.info("Initializing GUI...");
 
-        logger.info("Initialize  gui...");
-
-        try{
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                  | UnsupportedLookAndFeelException e) {
-
-            logger.error( e.getMessage() );
+            logger.warn("Could not set system look and feel.", e);
         }
 
-        new MainFrame(jda);
-
-        logger.info("GUI initialized!");
+        SwingUtilities.invokeLater(() -> {
+            new MainFrame(jda);
+            logger.info("GUI initialized!");
+        });
     }
 
     private static void loadCommands(JDA jda){
